@@ -114,17 +114,17 @@ class IO
   end
 
   def eof?
-    return true if @buf && @buf.size > 0
-
     ret = false
     char = ''
 
     begin
-      char = sysread(1)
+      char = readchar
     rescue EOFError => e
       ret = true
     ensure
-      _ungets(char)
+      if(@pos != 0)
+        _ungets(char)
+      end
     end
 
     ret
